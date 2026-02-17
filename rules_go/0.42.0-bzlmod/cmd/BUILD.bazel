@@ -1,4 +1,3 @@
-load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
@@ -38,11 +37,4 @@ go_library(
         "@com_github_shulammite_aso_bazel_demo_app//handlers:go_default_library",
         "@com_github_sirupsen_logrus//:logrus",
     ],
-)
-
-go_image(
-    name = "cmd_image",
-    base = "@distroless_base//image",
-    embed = [":cmd_lib"],
-    visibility = ["//visibility:public"],
 )
