@@ -1,0 +1,4 @@
+alias(
+    name = "app",
+    actual = "//src/main/java/com/example:app",
+)
