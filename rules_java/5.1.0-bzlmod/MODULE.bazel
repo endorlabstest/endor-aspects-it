@@ -1,0 +1,40 @@
+module(
+    name = "example",
+    version = "0.0.1",
+)
+
+bazel_dep(name = "rules_jvm_external", version = "6.0")
+bazel_dep(name = "rules_java", version = "7.2.0")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+
+maven.install(
+    name = "endor_it_java",
+    artifacts = [
+        "com.fasterxml.jackson.core:jackson-databind:2.16.1",
+        "com.google.code.gson:gson:2.10.1",
+        "com.google.guava:guava:33.0.0-jre",
+        "com.squareup.okhttp3:okhttp:4.12.0",
+        "commons-io:commons-io:2.15.1",
+        "joda-time:joda-time:2.12.7",
+        "org.apache.commons:commons-lang3:3.14.0",
+        "org.json:json:20231013",
+        "org.slf4j:slf4j-api:2.0.12",
+        "org.slf4j:slf4j-simple:2.0.12",
+    ],
+    # When updating versions, run `REPIN=1 bazel run @endor_it_java//:pin`
+    fail_if_repin_required = True,
+    generate_compat_repositories = True,
+    lock_file = "@//:maven_install.json",
+    repositories = [
+        "https://repo1.maven.org/maven2",
+        "https://repo.gradle.org/gradle/libs-releases",
+    ],
+)
+
+use_repo(maven, "endor_it_java", "unpinned_endor_it_java")
+
+java_toolchains = use_extension("@rules_java//java:extensions.bzl", "toolchains")
+use_repo(java_toolchains, "remotejdk17_macos_aarch64", "remotejdk17_macos_aarch64_toolchain_config_repo")
+register_toolchains("@remotejdk17_macos_aarch64_toolchain_config_repo//:all")
+
