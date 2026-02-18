@@ -124,10 +124,10 @@
     "@@rules_jvm_external~//:extensions.bzl%maven": {
       "general": {
         "bzlTransitiveDigest": "IqbIUhKrv84R2Yiln2y4zzhmEohdBQMlbEZK0vmRU2c=",
-        "usagesDigest": "ViJ5WoHb1yaAIATVlzlAOzmzxeHBzPvKqexS9Z3ScTI=",
+        "usagesDigest": "Xt+qRyttmcHIcRipU9zRsgIJUpQPLDNei20jnuX6GTA=",
         "recordedFileInputs": {
           "@@rules_jvm_external~//rules_jvm_external_deps_install.json": "cafb5d2d8119391eb2b322ce3840d3352ea82d496bdb8cbd4b6779ec4d044dda",
-          "@@//maven_install.json": "fa14686d561337f85220840cb264f0d69f229a497eec367ca4bf1df138489713"
+          "@@//maven_install.json": "2155b9b4b8b26315e3c912fc0b400e274b7cfba4dd60850de11b936a31aea4d3"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -147,9 +147,7 @@
                 "{ \"group\": \"com.google.guava\", \"artifact\": \"guava\", \"version\": \"33.0.0-jre\" }",
                 "{ \"group\": \"com.squareup.okhttp3\", \"artifact\": \"okhttp\", \"version\": \"4.12.0\" }",
                 "{ \"group\": \"commons-io\", \"artifact\": \"commons-io\", \"version\": \"2.15.1\" }",
-                "{ \"group\": \"joda-time\", \"artifact\": \"joda-time\", \"version\": \"2.12.7\" }",
                 "{ \"group\": \"org.apache.commons\", \"artifact\": \"commons-lang3\", \"version\": \"3.14.0\" }",
-                "{ \"group\": \"org.json\", \"artifact\": \"json\", \"version\": \"20231013\" }",
                 "{ \"group\": \"org.slf4j\", \"artifact\": \"slf4j-api\", \"version\": \"2.0.12\" }",
                 "{ \"group\": \"org.slf4j\", \"artifact\": \"slf4j-simple\", \"version\": \"2.0.12\" }"
               ],
@@ -340,18 +338,6 @@
               "downloaded_file_path": "v1/commons-io/commons-io/2.15.1/commons-io-2.15.1.jar"
             }
           },
-          "joda_time_joda_time_2_12_7": {
-            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-            "ruleClassName": "http_file",
-            "attributes": {
-              "sha256": "385282b005818cfaccdbe8bd2429811e7e641782f2b88932a6b8ff51d668f616",
-              "urls": [
-                "https://repo1.maven.org/maven2/joda-time/joda-time/2.12.7/joda-time-2.12.7.jar",
-                "https://repo.gradle.org/gradle/libs-releases/joda-time/joda-time/2.12.7/joda-time-2.12.7.jar"
-              ],
-              "downloaded_file_path": "v1/joda-time/joda-time/2.12.7/joda-time-2.12.7.jar"
-            }
-          },
           "org_apache_commons_commons_lang3_3_14_0": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_file",
@@ -436,18 +422,6 @@
               "downloaded_file_path": "v1/org/jetbrains/annotations/13.0/annotations-13.0.jar"
             }
           },
-          "org_json_json_20231013": {
-            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-            "ruleClassName": "http_file",
-            "attributes": {
-              "sha256": "0f18192df289114e17aa1a0d0a7f8372cc9f5c7e4f7e39adcf8906fe714fa7d3",
-              "urls": [
-                "https://repo1.maven.org/maven2/org/json/json/20231013/json-20231013.jar",
-                "https://repo.gradle.org/gradle/libs-releases/org/json/json/20231013/json-20231013.jar"
-              ],
-              "downloaded_file_path": "v1/org/json/json/20231013/json-20231013.jar"
-            }
-          },
           "org_slf4j_slf4j_api_2_0_12": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_file",
@@ -487,9 +461,7 @@
                 "{ \"group\": \"com.google.guava\", \"artifact\": \"guava\", \"version\": \"33.0.0-jre\" }",
                 "{ \"group\": \"com.squareup.okhttp3\", \"artifact\": \"okhttp\", \"version\": \"4.12.0\" }",
                 "{ \"group\": \"commons-io\", \"artifact\": \"commons-io\", \"version\": \"2.15.1\" }",
-                "{ \"group\": \"joda-time\", \"artifact\": \"joda-time\", \"version\": \"2.12.7\" }",
                 "{ \"group\": \"org.apache.commons\", \"artifact\": \"commons-lang3\", \"version\": \"3.14.0\" }",
-                "{ \"group\": \"org.json\", \"artifact\": \"json\", \"version\": \"20231013\" }",
                 "{ \"group\": \"org.slf4j\", \"artifact\": \"slf4j-api\", \"version\": \"2.0.12\" }",
                 "{ \"group\": \"org.slf4j\", \"artifact\": \"slf4j-simple\", \"version\": \"2.0.12\" }"
               ],
@@ -623,14 +595,6 @@
               "target_name": "commons_io_commons_io"
             }
           },
-          "joda_time_joda_time": {
-            "bzlFile": "@@rules_jvm_external~//private:compat_repository.bzl",
-            "ruleClassName": "compat_repository",
-            "attributes": {
-              "generating_repository": "endor_it_java",
-              "target_name": "joda_time_joda_time"
-            }
-          },
           "org_apache_commons_commons_lang3": {
             "bzlFile": "@@rules_jvm_external~//private:compat_repository.bzl",
             "ruleClassName": "compat_repository",
@@ -685,14 +649,6 @@
             "attributes": {
               "generating_repository": "endor_it_java",
               "target_name": "org_jetbrains_annotations"
-            }
-          },
-          "org_json_json": {
-            "bzlFile": "@@rules_jvm_external~//private:compat_repository.bzl",
-            "ruleClassName": "compat_repository",
-            "attributes": {
-              "generating_repository": "endor_it_java",
-              "target_name": "org_json_json"
             }
           },
           "org_slf4j_slf4j_api": {

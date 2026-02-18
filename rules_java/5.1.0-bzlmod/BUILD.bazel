@@ -1,20 +1,22 @@
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@io_bazel_rules_java//java:defs.bzl", "java_binary", "java_library")
 
 java_library(
     name = "app-lib",
     srcs = glob(["src/main/java/com/example/**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [
+        # Maven dependencies (via rules_jvm_external)
         "@endor_it_java//:com_fasterxml_jackson_core_jackson_databind",
         "@endor_it_java//:com_google_code_gson_gson",
         "@endor_it_java//:com_google_guava_guava",
         "@endor_it_java//:com_squareup_okhttp3_okhttp",
         "@endor_it_java//:commons_io_commons_io",
-        "@endor_it_java//:joda_time_joda_time",
         "@endor_it_java//:org_apache_commons_commons_lang3",
-        "@endor_it_java//:org_json_json",
         "@endor_it_java//:org_slf4j_slf4j_api",
         "@endor_it_java//:org_slf4j_slf4j_simple",
+        # Remote JAR dependencies (via http_jar in MODULE.bazel)
+        "@joda_time//jar",
+        "@org_json//jar",
     ],
 )
 

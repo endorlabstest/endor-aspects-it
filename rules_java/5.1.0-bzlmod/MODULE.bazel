@@ -4,23 +4,24 @@ module(
 )
 
 bazel_dep(name = "rules_jvm_external", version = "6.0")
-bazel_dep(name = "rules_java", version = "7.2.0")
+bazel_dep(name = "io_bazel_rules_java", version = "7.2.0")
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 
 maven.install(
     name = "endor_it_java",
     artifacts = [
+        # Maven dependencies (via rules_jvm_external)
         "com.fasterxml.jackson.core:jackson-databind:2.16.1",
         "com.google.code.gson:gson:2.10.1",
         "com.google.guava:guava:33.0.0-jre",
         "com.squareup.okhttp3:okhttp:4.12.0",
         "commons-io:commons-io:2.15.1",
-        "joda-time:joda-time:2.12.7",
         "org.apache.commons:commons-lang3:3.14.0",
-        "org.json:json:20231013",
         "org.slf4j:slf4j-api:2.0.12",
         "org.slf4j:slf4j-simple:2.0.12",
+        # NOTE: joda-time moved to http_jar (see below)
+        # NOTE: org.json moved to local java_import (see BUILD.bazel)
     ],
     # When updating versions, run `REPIN=1 bazel run @endor_it_java//:pin`
     fail_if_repin_required = True,
@@ -38,3 +39,18 @@ java_toolchains = use_extension("@rules_java//java:extensions.bzl", "toolchains"
 use_repo(java_toolchains, "remotejdk17_macos_aarch64", "remotejdk17_macos_aarch64_toolchain_config_repo")
 register_toolchains("@remotejdk17_macos_aarch64_toolchain_config_repo//:all")
 
+# Direct JAR dependency via http_jar (remote JAR from URL)
+# joda-time was moved here from maven.install to demonstrate http_jar
+http_jar = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
+
+http_jar(
+    name = "joda_time",
+    urls = ["https://repo1.maven.org/maven2/joda-time/joda-time/2.12.7/joda-time-2.12.7.jar"],
+    sha256 = "385282b005818cfaccdbe8bd2429811e7e641782f2b88932a6b8ff51d668f616",
+)
+
+http_jar(
+    name = "org_json",
+    urls = ["https://repo1.maven.org/maven2/org/json/json/20231013/json-20231013.jar"],
+    sha256 = "0f18192df289114e17aa1a0d0a7f8372cc9f5c7e4f7e39adcf8906fe714fa7d3",
+)
