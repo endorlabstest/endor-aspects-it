@@ -1,0 +1,72 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# ─── rules_java ──────────────────────────────────────────────────────────────
+
+http_archive(
+    name = "rules_java",
+    urls = [
+        "https://github.com/bazelbuild/rules_java/releases/download/7.2.0/rules_java-7.2.0.tar.gz",
+    ],
+    sha256 = "eb7db63ed826567b2ceb1ec53d6b729e01636f72c9f5dfb6d2dfe55ad69d1d2a",
+)
+
+load("@rules_java//java:repositories.bzl", "rules_java_dependencies", "rules_java_toolchains")
+
+rules_java_dependencies()
+
+rules_java_toolchains()
+
+# ─── rules_jvm_external ─────────────────────────────────────────────────────
+
+RULES_JVM_EXTERNAL_TAG = "6.0"
+
+RULES_JVM_EXTERNAL_SHA = "85fd6bad58ac76cc3a27c8e051e4255ff9ccd8c92ba879670d195622e7c0a9b7"
+
+http_archive(
+    name = "rules_jvm_external",
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+    sha256 = RULES_JVM_EXTERNAL_SHA,
+    url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/%s/rules_jvm_external-%s.tar.gz" % (RULES_JVM_EXTERNAL_TAG, RULES_JVM_EXTERNAL_TAG),
+)
+
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+rules_jvm_external_deps()
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+rules_jvm_external_setup()
+
+# ─── Maven dependencies ─────────────────────────────────────────────────────
+
+load("@rules_jvm_external//:defs.bzl", "maven_install")
+
+maven_install(
+    name = "endor_it_java",
+    artifacts = [
+        "com.fasterxml.jackson.core:jackson-databind:2.16.1",
+        "com.google.code.gson:gson:2.10.1",
+        "com.google.guava:guava:33.0.0-jre",
+        "com.squareup.okhttp3:okhttp:4.12.0",
+        "commons-io:commons-io:2.15.1",
+        "joda-time:joda-time:2.12.7",
+        "org.apache.commons:commons-lang3:3.14.0",
+        "org.json:json:20231013",
+        "org.slf4j:slf4j-api:2.0.12",
+        "org.slf4j:slf4j-simple:2.0.12",
+    ],
+    # When updating versions, run `REPIN=1 bazel run @endor_it_java//:pin`
+    fail_if_repin_required = True,
+    generate_compat_repositories = True,
+    maven_install_json = "//:endor_it_java_install.json",
+    repositories = [
+        "https://repo1.maven.org/maven2",
+        "https://repo.gradle.org/gradle/libs-releases",
+    ],
+)
+
+load("@endor_it_java//:defs.bzl", "pinned_maven_install")
+
+pinned_maven_install()
+
+
