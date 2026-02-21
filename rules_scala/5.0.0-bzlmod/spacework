@@ -1,0 +1,2 @@
+# This file intentionally left empty.
+# Its presence tells Bazel to ignore the WORKSPACE file when bzlmod is active.

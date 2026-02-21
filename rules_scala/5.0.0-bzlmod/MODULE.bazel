@@ -1,0 +1,40 @@
+module(
+    name = "rules_scala_example",
+    version = "0.1.0",
+)
+
+bazel_dep(name = "bazel_skylib", version = "1.5.0")
+bazel_dep(name = "rules_java", version = "7.12.4")
+# repo_name alias preserves @io_bazel_rules_scala//... labels in all BUILD files
+bazel_dep(name = "rules_scala", version = "7.2.2", repo_name = "io_bazel_rules_scala")
+bazel_dep(name = "rules_jvm_external", version = "6.6")
+
+# ── Scala configuration ──────────────────────────────────────────────────────
+scala_config = use_extension(
+    "@io_bazel_rules_scala//scala/extensions:config.bzl",
+    "scala_config",
+)
+scala_config.settings(scala_version = "2.13.18")
+
+# ── Fetch Scala compiler JARs ────────────────────────────────────────────────
+scala_deps = use_extension(
+    "@io_bazel_rules_scala//scala/extensions:deps.bzl",
+    "scala_deps",
+)
+scala_deps.scala()
+
+# ── Maven dependencies ───────────────────────────────────────────────────────
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    artifacts = [
+        "org.scalameta:scalameta_2.13:4.5.13",
+        "com.lihaoyi:pprint_2.13:0.7.3",
+    ],
+    repositories = [
+        "https://repo1.maven.org/maven2",
+    ],
+)
+use_repo(maven, "maven")
+
+# ── Custom Scala toolchain ───────────────────────────────────────────────────
+register_toolchains("//:transitive_deps_toolchain")
