@@ -1,0 +1,4 @@
+build --java_runtime_version=remotejdk_17
+build --copt=-Wno-error=macro-redefined
+build --host_copt=-Wno-error=macro-redefined
+common --noenable_bzlmod
