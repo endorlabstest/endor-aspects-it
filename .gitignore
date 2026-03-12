@@ -97,3 +97,5 @@
 **/*.pdb
 
 # End of https://www.toptal.com/developers/gitignore/api/react,java,go,rust,bazel
+
+.build/

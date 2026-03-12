@@ -1,0 +1,16 @@
+load("@rules_swift//swift:swift.bzl", "swift_library")
+
+swift_library(
+    name = "VulnDemoLib",
+    srcs = glob(["*.swift"]),
+    module_name = "VulnDemoLib",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//Sources/Models",
+        "//Sources/Networking",
+        "@SSZipArchive//:SSZipArchive",
+        "@swiftpkg_jose_swift//:jose-swift",
+        "@swiftpkg_leaf_kit//:LeafKit",
+        "@swiftpkg_swift_nio_http2//:NIOHTTP2",
+    ],
+)
