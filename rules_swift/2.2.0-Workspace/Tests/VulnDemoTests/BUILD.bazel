@@ -1,0 +1,11 @@
+load("@build_bazel_rules_swift//swift:swift_test.bzl", "swift_test")
+
+swift_test(
+    name = "VulnDemoTests",
+    srcs = ["VulnDemoTests.swift"],
+    deps = [
+        "//Sources/Models",
+        "//Sources/Networking",
+        "//Sources/VulnDemoLib",
+    ],
+)

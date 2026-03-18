@@ -1,0 +1,35 @@
+load("@build_bazel_rules_swift//swift:swift_library.bzl", "swift_library")
+
+_NIO_HTTP2_PACKAGE_COPTS = ["-package-name", "swift-nio-http2"]
+
+swift_library(
+    name = "NIOHPACK",
+    srcs = glob(["Sources/NIOHPACK/**/*.swift"]),
+    copts = _NIO_HTTP2_PACKAGE_COPTS,
+    module_name = "NIOHPACK",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@swift_nio//:NIO",
+        "@swift_nio//:NIOConcurrencyHelpers",
+        "@swift_nio//:NIOCore",
+        "@swift_nio//:NIOHTTP1",
+    ],
+)
+
+swift_library(
+    name = "NIOHTTP2",
+    srcs = glob(["Sources/NIOHTTP2/**/*.swift"]),
+    copts = _NIO_HTTP2_PACKAGE_COPTS,
+    module_name = "NIOHTTP2",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":NIOHPACK",
+        "@swift_atomics//:Atomics",
+        "@swift_nio//:_NIOBase64",
+        "@swift_nio//:NIO",
+        "@swift_nio//:NIOConcurrencyHelpers",
+        "@swift_nio//:NIOCore",
+        "@swift_nio//:NIOHTTP1",
+        "@swift_nio//:NIOTLS",
+    ],
+)

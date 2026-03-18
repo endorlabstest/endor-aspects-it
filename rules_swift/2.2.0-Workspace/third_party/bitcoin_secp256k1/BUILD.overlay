@@ -1,0 +1,25 @@
+filegroup(
+    name = "public_headers",
+    srcs = glob(["include/*.h"]),
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "secp256k1",
+    srcs = [
+        "src/secp256k1.c",
+        "src/precomputed_ecmult.c",
+        "src/precomputed_ecmult_gen.c",
+    ],
+    hdrs = glob(["include/*.h"]) + glob(["src/**/*.h"]),
+    copts = [
+        "-DECMULT_GEN_PREC_BITS=4",
+        "-DECMULT_WINDOW_SIZE=15",
+        "-DENABLE_MODULE_ECDH",
+        "-DENABLE_MODULE_EXTRAKEYS",
+        "-DENABLE_MODULE_RECOVERY",
+        "-DENABLE_MODULE_SCHNORRSIG",
+    ],
+    includes = ["include", "src"],
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,24 @@
+load("@build_bazel_rules_swift//swift:swift_library.bzl", "swift_library")
+
+objc_library(
+    name = "_AtomicsShims",
+    srcs = ["Sources/_AtomicsShims/src/_AtomicsShims.c"],
+    hdrs = glob(["Sources/_AtomicsShims/include/*.h"]),
+    includes = ["Sources/_AtomicsShims/include"],
+    visibility = ["//visibility:public"],
+)
+
+swift_library(
+    name = "Atomics",
+    srcs = glob(
+        ["Sources/Atomics/**/*.swift"],
+        exclude = ["Sources/Atomics/**/*.gyb"],
+    ),
+    copts = [
+        "-enable-experimental-feature",
+        "BuiltinModule",
+    ],
+    module_name = "Atomics",
+    visibility = ["//visibility:public"],
+    deps = [":_AtomicsShims"],
+)

@@ -1,0 +1,28 @@
+# Subset of swift-crypto 2.6.0 files needed by secp256k1.swift 0.15.0
+# (replaces dangling git-submodule symlinks in the secp256k1.swift tarball)
+filegroup(
+    name = "secp256k1_compat_srcs",
+    srcs = [
+        "Sources/Crypto/CryptoKitErrors.swift",
+        "Sources/Crypto/Digests/Digest.swift",
+        "Sources/Crypto/Signatures/Signature.swift",
+        "Sources/Crypto/Util/PrettyBytes.swift",
+        "Sources/Crypto/Util/SecureBytes.swift",
+        "Sources/Crypto/Util/BoringSSL/RNG_boring.swift",
+        "Sources/Crypto/ASN1/ASN1.swift",
+        "Sources/Crypto/ASN1/ECDSASignature.swift",
+        "Sources/Crypto/ASN1/PEMDocument.swift",
+        "Sources/Crypto/ASN1/PKCS8PrivateKey.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ArraySliceBigint.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ASN1Any.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ASN1BitString.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ASN1Boolean.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ASN1Identifier.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ASN1Integer.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ASN1Null.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ASN1OctetString.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/ASN1Strings.swift",
+        "Sources/Crypto/ASN1/Basic ASN1 Types/GeneralizedTime.swift",
+    ],
+    visibility = ["//visibility:public"],
+)
