@@ -1,0 +1,126 @@
+workspace(name = "rules_swift-1_11_0-workspace")
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Pin apple_support 1.15.1 before rules_swift to apply the LC_UUID patch.
+# macOS 26+ (Darwin 25.x) dyld requires LC_UUID on all executables;
+# -Wl,-no_uuid in wrapped_clang causes a crash. Patch it to -Wl,-random_uuid.
+http_archive(
+    name = "build_bazel_apple_support",
+    sha256 = "c4bb2b7367c484382300aee75be598b92f847896fb31bbd22f3a2346adf66a80",
+    url = "https://github.com/bazelbuild/apple_support/releases/download/1.15.1/apple_support.1.15.1.tar.gz",
+    patch_cmds = [
+        "sed -i.bak 's/-Wl,-no_uuid/-Wl,-random_uuid/g' crosstool/osx_cc_configure.bzl && rm -f crosstool/osx_cc_configure.bzl.bak",
+    ],
+)
+
+# rules_swift 2.2.0
+http_archive(
+    name = "build_bazel_rules_swift",
+    sha256 = "3f91a879beff14b64d07105771dc0db87c2b98b128a4957bfbe54c27fb47da38",
+    url = "https://github.com/bazelbuild/rules_swift/releases/download/2.2.0/rules_swift.2.2.0.tar.gz",
+)
+
+load("@build_bazel_rules_swift//swift:repositories.bzl", "swift_rules_dependencies")
+swift_rules_dependencies()
+
+load("@build_bazel_rules_swift//swift:extras.bzl", "swift_rules_extra_dependencies")
+swift_rules_extra_dependencies()
+
+# --- Third-party dependencies ---
+
+http_archive(
+    name = "SSZipArchive",
+    build_file = "//third_party:SSZipArchive/BUILD.overlay",
+    sha256 = "201ff097b90819844e941da07e565353c8591023a03a913e6d70fcca6890f108",
+    strip_prefix = "ZipArchive-2.5.3",
+    url = "https://github.com/ZipArchive/ZipArchive/archive/refs/tags/2.5.3.tar.gz",
+)
+
+http_archive(
+    name = "CryptoSwift",
+    build_file = "//third_party:CryptoSwift/BUILD.overlay",
+    sha256 = "903d1f123a11a18bb4b95910149379fde82cfe058c64ec519c5069c941c17e9b",
+    strip_prefix = "CryptoSwift-1.8.5",
+    url = "https://github.com/krzyzanowskim/CryptoSwift/archive/refs/tags/1.8.5.tar.gz",
+)
+
+http_archive(
+    name = "swift_crypto",
+    build_file = "//third_party:swift_crypto/BUILD.overlay",
+    sha256 = "9334a3beeb86a87de876efbc44f87582791d1d12f4a82823ebcb164ceb724c3f",
+    strip_prefix = "swift-crypto-2.6.0",
+    url = "https://github.com/apple/swift-crypto/archive/refs/tags/2.6.0.tar.gz",
+)
+
+http_archive(
+    name = "secp256k1_swift",
+    build_file = "//third_party:secp256k1_swift/BUILD.overlay",
+    sha256 = "1015afb3a446f3a647b14a214ae64bd57e5bd9587d97b5b0a58da2b646e076c1",
+    strip_prefix = "swift-secp256k1-0.15.0",
+    url = "https://github.com/GigaBitcoin/secp256k1.swift/archive/refs/tags/0.15.0.tar.gz",
+)
+
+http_archive(
+    name = "bitcoin_secp256k1",
+    build_file = "//third_party:bitcoin_secp256k1/BUILD.overlay",
+    sha256 = "081f4730becba2715a6b0fd198fedd9e649a6caaa6a7d6d3cf0f9fa7483f2cf1",
+    strip_prefix = "secp256k1-0.5.1",
+    url = "https://github.com/bitcoin-core/secp256k1/archive/refs/tags/v0.5.1.tar.gz",
+)
+
+http_archive(
+    name = "jose_swift",
+    build_file = "//third_party:jose_swift/BUILD.overlay",
+    sha256 = "c299d2bd770ecf341eea2dca9cc6b57412fa0adb6a72efd13cd1080c063a19d7",
+    strip_prefix = "jose-swift-4.0.0",
+    url = "https://github.com/beatt83/jose-swift/archive/refs/tags/4.0.0.tar.gz",
+)
+
+http_archive(
+    name = "swift_atomics",
+    build_file = "//third_party:swift_atomics/BUILD.overlay",
+    sha256 = "556761d16bae75278bb2c64d8ab510b98d133d0809ca06a2ba32fac96fae916e",
+    strip_prefix = "swift-atomics-1.3.0",
+    url = "https://github.com/apple/swift-atomics/archive/refs/tags/1.3.0.tar.gz",
+)
+
+http_archive(
+    name = "swift_collections",
+    build_file = "//third_party:swift_collections/BUILD.overlay",
+    sha256 = "41f15c8768f726c0cd4f4b0c63eea7b241c11260b82c33f0b1f4bb8737cabe43",
+    strip_prefix = "swift-collections-1.1.4",
+    url = "https://github.com/apple/swift-collections/archive/refs/tags/1.1.4.tar.gz",
+)
+
+http_archive(
+    name = "swift_system",
+    build_file = "//third_party:swift_system/BUILD.overlay",
+    sha256 = "890c529672754df3c056b3d0d7d5ce7b2ea3e872c61b16b14cfd5346b83cba39",
+    strip_prefix = "swift-system-1.6.4",
+    url = "https://github.com/apple/swift-system/archive/refs/tags/1.6.4.tar.gz",
+)
+
+http_archive(
+    name = "swift_nio",
+    build_file = "//third_party:swift_nio/BUILD.overlay",
+    sha256 = "df2183ce469f61f971977c3cd5609a476c3ee4a4c05a2c32644d81497a27671e",
+    strip_prefix = "swift-nio-2.95.0",
+    url = "https://github.com/apple/swift-nio/archive/refs/tags/2.95.0.tar.gz",
+)
+
+http_archive(
+    name = "swift_nio_http2",
+    build_file = "//third_party:swift_nio_http2/BUILD.overlay",
+    sha256 = "b337980c1001f993b59dd22938a8f9a1b2e8886c52753a887b0c4f24b307f3d7",
+    strip_prefix = "swift-nio-http2-1.27.0",
+    url = "https://github.com/apple/swift-nio-http2/archive/refs/tags/1.27.0.tar.gz",
+)
+
+http_archive(
+    name = "leaf_kit",
+    build_file = "//third_party:leaf_kit/BUILD.overlay",
+    sha256 = "ab8dd0732830b10a5f892883d2aecb97de53b6a4d3a58f338396ba3c2c2f3901",
+    strip_prefix = "leaf-kit-1.4.0",
+    url = "https://github.com/vapor/leaf-kit/archive/refs/tags/1.4.0.tar.gz",
+)

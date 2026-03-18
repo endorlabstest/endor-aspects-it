@@ -1,0 +1,68 @@
+load("@build_bazel_rules_swift//swift:swift_library.bzl", "swift_library")
+
+swift_library(
+    name = "Tools",
+    srcs = glob(["Sources/Tools/**/*.swift"]),
+    module_name = "Tools",
+    visibility = ["//visibility:public"],
+)
+
+swift_library(
+    name = "JSONWebKey",
+    srcs = glob(["Sources/JSONWebKey/**/*.swift"]),
+    module_name = "JSONWebKey",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":Tools",
+        "@CryptoSwift//:CryptoSwift",
+        "@secp256k1_swift//:secp256k1",
+    ],
+)
+
+swift_library(
+    name = "JSONWebAlgorithms",
+    srcs = glob(["Sources/JSONWebAlgorithms/**/*.swift"]),
+    module_name = "JSONWebAlgorithms",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":JSONWebKey",
+        "@CryptoSwift//:CryptoSwift",
+        "@secp256k1_swift//:secp256k1",
+    ],
+)
+
+swift_library(
+    name = "JSONWebSignature",
+    srcs = glob(["Sources/JSONWebSignature/**/*.swift"]),
+    module_name = "JSONWebSignature",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":JSONWebAlgorithms",
+        ":JSONWebKey",
+    ],
+)
+
+swift_library(
+    name = "JSONWebEncryption",
+    srcs = glob(["Sources/JSONWebEncryption/**/*.swift"]),
+    module_name = "JSONWebEncryption",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":JSONWebAlgorithms",
+        ":JSONWebKey",
+        "@CryptoSwift//:CryptoSwift",
+    ],
+)
+
+swift_library(
+    name = "JSONWebToken",
+    srcs = glob(["Sources/JSONWebToken/**/*.swift"]),
+    module_name = "JSONWebToken",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":JSONWebEncryption",
+        ":JSONWebKey",
+        ":JSONWebSignature",
+        ":Tools",
+    ],
+)

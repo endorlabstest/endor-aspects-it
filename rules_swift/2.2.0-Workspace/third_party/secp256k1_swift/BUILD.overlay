@@ -1,0 +1,36 @@
+load("@build_bazel_rules_swift//swift:swift.bzl", "swift_interop_hint", "swift_library")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "secp256k1_bindings",
+    alwayslink = True,
+    aspect_hints = [":secp256k1_bindings_swift_hint"],
+    copts = [
+        "-fblocks",
+        "-fobjc-arc",
+        "-fPIC",
+        "-DSWIFT_PACKAGE=1",
+        "-fmodule-name=secp256k1_bindings",
+        "-std=c89",
+    ],
+    hdrs = [
+        "Sources/secp256k1_bindings/include/Utility.h",
+        "@bitcoin_secp256k1//:public_headers",
+    ],
+    srcs = ["Sources/secp256k1_bindings/src/Utility.c"],
+    deps = ["@bitcoin_secp256k1//:secp256k1"],
+    visibility = ["//visibility:public"],
+)
+
+swift_interop_hint(
+    name = "secp256k1_bindings_swift_hint",
+    module_name = "secp256k1_bindings",
+)
+
+swift_library(
+    name = "secp256k1",
+    srcs = glob(["Sources/zkp/**/*.swift"]) + ["@swift_crypto//:secp256k1_compat_srcs"],
+    module_name = "secp256k1",
+    visibility = ["//visibility:public"],
+    deps = [":secp256k1_bindings"],
+)

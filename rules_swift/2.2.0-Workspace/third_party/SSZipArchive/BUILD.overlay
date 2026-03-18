@@ -1,0 +1,27 @@
+objc_library(
+    name = "SSZipArchive",
+    srcs = glob([
+        "SSZipArchive/*.m",
+        "SSZipArchive/minizip/*.c",
+    ]),
+    hdrs = glob([
+        "SSZipArchive/*.h",
+        "SSZipArchive/include/*.h",
+        "SSZipArchive/minizip/*.h",
+    ]),
+    copts = [
+        "-DHAVE_INTTYPES_H",
+        "-DHAVE_PKCRYPT",
+        "-DHAVE_STDINT_H",
+        "-DHAVE_WZAES",
+        "-DHAVE_ZLIB",
+        "-DZLIB_COMPAT",
+    ],
+    includes = [
+        "SSZipArchive",
+        "SSZipArchive/include",
+    ],
+    sdk_dylibs = ["libz"],
+    sdk_frameworks = ["Security"],
+    visibility = ["//visibility:public"],
+)
