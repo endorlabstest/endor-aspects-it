@@ -1,0 +1,32 @@
+module(name = "rules_swift-3.5.0", version = "0.0.1")
+
+bazel_dep(name = "apple_support", version = "2.3.0")
+bazel_dep(name = "rules_swift", version = "3.5.0")
+bazel_dep(name = "rules_swift_package_manager", version = "1.13.0")
+
+swift_deps = use_extension(
+    "@rules_swift_package_manager//:extensions.bzl",
+    "swift_deps",
+)
+swift_deps.from_package(
+    resolved = "//:Package.resolved",
+    swift = "//:Package.swift",
+)
+use_repo(
+    swift_deps,
+    "swift_package",
+    "swiftpkg_jose_swift",
+    "swiftpkg_leaf_kit",
+    "swiftpkg_swift_collections",
+    "swiftpkg_swift_nio_http2",
+)
+
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+http_archive(
+    name = "SSZipArchive",
+    build_file = "//third_party:SSZipArchive.BUILD",
+    sha256 = "201ff097b90819844e941da07e565353c8591023a03a913e6d70fcca6890f108",
+    strip_prefix = "ZipArchive-2.5.3",
+    url = "https://github.com/ZipArchive/ZipArchive/archive/refs/tags/2.5.3.tar.gz",
+)
