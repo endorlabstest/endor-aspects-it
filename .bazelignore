@@ -4,5 +4,6 @@ rules_js/2.0.0
 rules_rust/0.40.0
 rules_java/5.1.0
 rules_java/5.1.0-bzlmod
+rules_rust/0.56.0-bzlmod
 rules_swift/3.5.0
 rules_swift/2.2.0-Workspace
