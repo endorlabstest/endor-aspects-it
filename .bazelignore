@@ -1,6 +1,7 @@
 rules_go/0.42.0
 rules_go/0.42.0-bzlmod
 rules_js/2.0.0
+rules_js/3.0.3-bzlmod
 rules_rust/0.40.0
 rules_java/5.1.0
 rules_java/5.1.0-bzlmod
