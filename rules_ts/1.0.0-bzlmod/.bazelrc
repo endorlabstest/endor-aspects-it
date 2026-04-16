@@ -1,0 +1,22 @@
+# Don't create bazel-* symlinks in the WORKSPACE directory
+build --symlink_prefix=dist/
+
+# Turn off legacy external runfiles
+build --nolegacy_external_runfiles
+
+# Turn on --incompatible_strict_action_env which was on by default
+# in Bazel 0.21.0 to help cache hits when environment variables change.
+build --incompatible_strict_action_env
+
+# Performance: avoid stat'ing input files
+build --experimental_guard_against_concurrent_changes
+
+# Use tsc as the default transpiler (required since rules_ts v2.0)
+build --@aspect_rules_ts//ts:default_to_tsc_transpiler
+
+# --- NON-HERMETIC flags (commented out — for reference only) ---
+#
+# build --action_env=PATH              # Leaks host $PATH into actions
+# build --action_env=NODE_PATH=/usr/local/lib/node_modules  # Uses host global node_modules
+# build --action_env=HOME              # Leaks ~/.npmrc, ~/.node-gyp, etc.
+# build --spawn_strategy=local         # Disables sandboxing entirely
