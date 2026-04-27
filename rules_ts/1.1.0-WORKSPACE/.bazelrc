@@ -1,0 +1,13 @@
+# Use WORKSPACE instead of bzlmod
+common --noenable_bzlmod
+
+# Don't create bazel-* symlinks in the WORKSPACE directory
+build --symlink_prefix=dist/
+
+# Turn on --incompatible_strict_action_env which was on by default
+# in Bazel 0.21.0 to help cache hits when environment variables change.
+build --incompatible_strict_action_env
+
+# Use tsc as the default transpiler (required since rules_ts v2.0)
+build --@aspect_rules_ts//ts:default_to_tsc_transpiler
+
