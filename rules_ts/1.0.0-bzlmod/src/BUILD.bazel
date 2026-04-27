@@ -1,0 +1,12 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+# Top-level app entry
+ts_project(
+    name = "app",
+    srcs = ["app.ts"],
+    declaration = True,
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/api",
+    ],
+)

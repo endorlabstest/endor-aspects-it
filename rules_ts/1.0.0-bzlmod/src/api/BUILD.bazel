@@ -1,0 +1,28 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+# API server — depends on core + all PURL pattern packages
+ts_project(
+    name = "api",
+    srcs = ["server.ts"],
+    declaration = True,
+    visibility = ["//src:__subpackages__"],
+    deps = [
+        "//src/core",
+        "//:node_modules/@types/express",
+        "//:node_modules/@types/node",
+        "//:node_modules/express",
+        # Scoped orgs (6 different PURL namespaces)
+        "//:node_modules/@babel/parser",        # pkg:npm/%40babel/parser
+        "//:node_modules/@opentelemetry/api",   # pkg:npm/%40opentelemetry/api
+        "//:node_modules/@sinclair/typebox",    # pkg:npm/%40sinclair/typebox
+        "//:node_modules/@hapi/boom",           # pkg:npm/%40hapi/boom
+        "//:node_modules/@fastify/error",       # pkg:npm/%40fastify/error
+        "//:node_modules/@koa/router",          # pkg:npm/%40koa/router
+        # npm alias (resolves to different package name)
+        "//:node_modules/string-width-cjs",     # alias → pkg:npm/string-width
+        # Native binary (platform-specific optional deps)
+        "//:node_modules/esbuild",              # pkg:npm/esbuild + @esbuild/*
+        # Exact pinned version
+        "//:node_modules/undici",               # pkg:npm/undici@6.6.2
+    ],
+)
