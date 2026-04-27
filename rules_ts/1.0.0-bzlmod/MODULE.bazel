@@ -19,34 +19,3 @@ use_repo(npm, "npm")
 rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext")
 rules_ts_ext.deps(ts_version_from = "//:package.json")
 use_repo(rules_ts_ext, "npm_typescript")
-
-# =============================================================================
-# NON-HERMETIC TOOLCHAIN (commented out — for reference only)
-# =============================================================================
-# WARNING: Non-hermetic builds break reproducibility. Different machines may
-# have different node/tsc versions, leading to "works on my machine" bugs.
-#
-# --- Pattern 1: Use host machine's Node.js instead of hermetic download ---
-#
-# node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
-# node.toolchain(
-#     name = "nodejs",
-#     node_version = "host",  # Uses whatever node is on the host $PATH
-# )
-#
-# --- Pattern 2: Use host machine's tsc instead of Bazel-managed TypeScript ---
-#
-# rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext")
-# rules_ts_ext.deps(
-#     ts_version = None,  # Skips downloading TypeScript, uses host tsc
-# )
-#
-# --- Pattern 3: Leak host env into npm lifecycle hooks ---
-#
-# npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm")
-# npm.npm_translate_lock(
-#     name = "npm",
-#     pnpm_lock = "//:pnpm-lock.yaml",
-#     lifecycle_hooks_use_default_shell_env = True,  # Leaks host env into actions
-# )
-# use_repo(npm, "npm")
