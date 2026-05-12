@@ -8,6 +8,7 @@ swift_library(
     deps = [
         "//Sources/Models",
         "//Sources/Networking",
+        "//Sources/Proto:demo_swift_proto",
         "@SSZipArchive//:SSZipArchive",
         "@swiftpkg_jose_swift//:jose-swift",
         "@swiftpkg_leaf_kit//:LeafKit",

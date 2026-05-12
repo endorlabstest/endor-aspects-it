@@ -1,0 +1,14 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@build_bazel_rules_swift//proto:swift_proto_library.bzl", "swift_proto_library")
+
+proto_library(
+    name = "demo_proto",
+    srcs = ["demo.proto"],
+    visibility = ["//visibility:public"],
+)
+
+swift_proto_library(
+    name = "demo_swift_proto",
+    protos = [":demo_proto"],
+    visibility = ["//visibility:public"],
+)

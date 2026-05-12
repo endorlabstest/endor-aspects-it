@@ -8,6 +8,7 @@ swift_library(
     deps = [
         "//Sources/Models",
         "//Sources/Networking",
+        "//Sources/Proto:demo_swift_proto",
         "@jose_swift//:JSONWebAlgorithms",
         "@jose_swift//:JSONWebKey",
         "@jose_swift//:JSONWebSignature",

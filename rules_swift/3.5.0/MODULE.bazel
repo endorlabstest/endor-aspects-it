@@ -3,6 +3,7 @@ module(name = "rules_swift-3.5.0", version = "0.0.1")
 bazel_dep(name = "apple_support", version = "2.3.0")
 bazel_dep(name = "rules_swift", version = "3.5.0")
 bazel_dep(name = "rules_swift_package_manager", version = "1.13.0")
+bazel_dep(name = "protobuf", version = "34.0.bcr.1")
 
 swift_deps = use_extension(
     "@rules_swift_package_manager//:extensions.bzl",

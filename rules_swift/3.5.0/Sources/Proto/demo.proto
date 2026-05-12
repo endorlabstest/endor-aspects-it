@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package vulndemo;
+
+message Demo {
+  string message = 1;
+  int32 code = 2;
+}
